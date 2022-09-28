@@ -10,7 +10,7 @@ const (
 	SEARCH_URL = "https://customsearch.googleapis.com/customsearch/v1?key={api_key}&cx={cx}&q={query}&start={start}"
 )
 
-func dork(query string, apiKey string, cx string) (result []*GoogleSearchResults, err error) {
+func Dork(query string, apiKey string, cx string) (result []*GoogleSearchResults, err error) {
 	cli := resty.New()
 	params := make(map[string]string)
 	params["api_key"] = apiKey
