@@ -1,9 +1,9 @@
-*Golang Google Dorks*
+# Golang Google Dorks
 
-**Description:**
+## Description:
 
-***A simple module to use google custom search api for google dorks***
+### ***A simple module to use google custom search api for google dorks***
 
-**Documentation:**
+## Documentation:
 
-***TBC***
+### ***TBC***
