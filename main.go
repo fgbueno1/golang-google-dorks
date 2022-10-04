@@ -14,6 +14,7 @@ const (
 // Dork receive a query to search on google based on api-key and searchiengine provided.
 func Dork(query string, apiKey string, cx string) (result []*GoogleSearchResults, err error) {
 	cli := resty.New()
+	cli.SetError(&APIError{})
 	params := make(map[string]string)
 	params["api_key"] = apiKey
 	params["cx"] = cx
