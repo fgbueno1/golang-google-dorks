@@ -40,7 +40,7 @@ func Dork(query string, apiKey string, cx string) (result []*GoogleSearchResults
 	return
 }
 
-// CheckError validate if an response is not an error.
+// CheckError validate if an response is an error or not.
 func CheckError(response *resty.Response) (resolvedError error) {
 	if response.IsError() {
 		apiError := response.Error().(*APIError)
