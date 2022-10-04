@@ -78,3 +78,24 @@ type Items struct {
 	Mime       string `json:"mime,omitempty"`
 	FileFormat string `json:"fileFormat,omitempty"`
 }
+
+type APIError struct {
+	Error struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+		Errors  []struct {
+			Message string `json:"message"`
+			Domain  string `json:"domain"`
+			Reason  string `json:"reason"`
+		} `json:"errors"`
+		Status  string `json:"status"`
+		Details []struct {
+			Type     string `json:"@type"`
+			Reason   string `json:"reason"`
+			Domain   string `json:"domain"`
+			Metadata struct {
+				Service string `json:"service"`
+			} `json:"metadata"`
+		} `json:"details"`
+	} `json:"error"`
+}

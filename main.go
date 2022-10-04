@@ -1,6 +1,7 @@
 package golangGoogleDorks
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/go-resty/resty/v2"
@@ -10,6 +11,7 @@ const (
 	SEARCH_URL = "https://customsearch.googleapis.com/customsearch/v1?key={api_key}&cx={cx}&q={query}&start={start}"
 )
 
+// Dork receive a query to search on google based on api-key and searchiengine provided.
 func Dork(query string, apiKey string, cx string) (result []*GoogleSearchResults, err error) {
 	cli := resty.New()
 	params := make(map[string]string)
@@ -19,6 +21,10 @@ func Dork(query string, apiKey string, cx string) (result []*GoogleSearchResults
 	params["query"] = query
 	for {
 		resp, err := cli.R().SetPathParams(params).SetResult(&GoogleSearchResults{}).Get(SEARCH_URL)
+		if err != nil {
+			return result, err
+		}
+		err = CheckError(resp)
 		if err != nil {
 			return result, err
 		}
@@ -32,4 +38,16 @@ func Dork(query string, apiKey string, cx string) (result []*GoogleSearchResults
 		}
 	}
 	return
+}
+
+// CheckError validate if an response is not an error.
+func CheckError(response *resty.Response) (resolvedError error) {
+	if response.IsError() {
+		apiError := response.Error().(*APIError)
+		resolvedError = fmt.Errorf(
+			"the application returned an error of type %v with message: %s",
+			apiError.Error.Code, apiError.Error.Message,
+		)
+	}
+	return resolvedError
 }
